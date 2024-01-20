@@ -1,0 +1,115 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  user: User!
+}
+
+type Mutation {
+  createRole(roleInput: RoleDto!): RoleResponse!
+  createRoleDetail(roleDetailInput: RoleDetailDto!): RoleDetailResponse!
+  createUserRoleMap(userRoleMapInput: UserRoleMapDto!): UserRoleMapResponse!
+  login(loginInput: LoginDto!): LoginResponse!
+  logout: String!
+  refreshToken: String!
+  register(registerInput: RegisterDto!): RegisterResponse!
+}
+
+type Query {
+  getMovie: String!
+  hello: String!
+  updateMovie: String!
+}
+
+input RegisterDto {
+  confirmPassword: String!
+  email: String!
+  fullName: String!
+  password: String!
+}
+
+type RegisterResponse {
+  user: User
+}
+
+type Role {
+  createdAt: DateTime
+  createdBy: Float
+  id: Float
+  name: String!
+  updatedAt: DateTime
+  updatedBy: Float
+}
+
+type RoleDetail {
+  canDelete: Boolean!
+  canRead: Boolean!
+  canUpdate: Boolean!
+  canWrite: Boolean!
+  createdAt: DateTime
+  createdBy: Float
+  id: Float
+  roleId: Float!
+  updatedAt: DateTime
+  updatedBy: Float
+}
+
+input RoleDetailDto {
+  canDelete: Boolean!
+  canRead: Boolean!
+  canUpdate: Boolean!
+  canWrite: Boolean!
+  roleId: Float!
+}
+
+type RoleDetailResponse {
+  roleDetail: RoleDetail
+}
+
+input RoleDto {
+  name: String!
+}
+
+type RoleResponse {
+  role: Role
+}
+
+type User {
+  avatarUrl: String
+  createdAt: DateTime
+  email: String!
+  fullname: String!
+  id: Float
+  password: String
+  updatedAt: DateTime
+}
+
+type UserRoleMap {
+  createdAt: DateTime
+  createdBy: Float
+  id: Float
+  roleId: Float!
+  updatedAt: DateTime
+  updatedBy: Float
+  userId: Float!
+}
+
+input UserRoleMapDto {
+  roleId: Float!
+  userId: Float!
+}
+
+type UserRoleMapResponse {
+  userRoleMap: UserRoleMap
+}

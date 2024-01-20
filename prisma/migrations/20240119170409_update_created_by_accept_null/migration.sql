@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Movie" ALTER COLUMN "createdBy" DROP NOT NULL,
+ALTER COLUMN "updatedBy" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Role" ALTER COLUMN "createdBy" DROP NOT NULL,
+ALTER COLUMN "updatedBy" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "RoleDetail" ALTER COLUMN "createdBy" DROP NOT NULL,
+ALTER COLUMN "updatedBy" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "UserRoleMap" ALTER COLUMN "createdBy" DROP NOT NULL,
+ALTER COLUMN "updatedBy" DROP NOT NULL;
