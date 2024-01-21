@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ApolloDriver } from '@nestjs/apollo';
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { TokenService } from './token/token.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -13,6 +13,7 @@ import { MovieModule } from './movie/movie.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MovieTaskService } from './cron/MovieTaskService';
 import { PrismaService } from './prisma.service';
+import { GraphQLError } from "graphql/error";
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { PrismaService } from './prisma.service';
     AuthModule,
     RoleModule,
     MovieModule,
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       imports: [ConfigModule, AppModule],
       inject: [ConfigService],
       driver: ApolloDriver,
@@ -55,6 +56,21 @@ import { PrismaService } from './prisma.service';
           context: ({ req, res }) => {
             return { req, res };
           },
+          // formatError: (error) => {
+          //   const originalError = error.extensions
+          //     ?.originalError as GraphQLError;
+          //
+          //   if (!originalError) {
+          //     return {
+          //       message: error.message,
+          //       code: error.extensions?.code,
+          //     };
+          //   }
+          //   return {
+          //     message: originalError.message,
+          //     code: error.extensions?.code,
+          //   };
+          // },
         };
       },
     }),

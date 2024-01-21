@@ -14,7 +14,7 @@ class MovieOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  name?: SortOrder;
+  movie?: SortOrder;
 
   @Field(() => SortOrder, {
     nullable: true,

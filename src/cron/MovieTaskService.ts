@@ -15,22 +15,14 @@ export class MovieTaskService {
     name: 'getMovie',
   })
   async handleCron() {
-    // const currentHour = new Date().getHours();
-    // cron working from 7am to 4pm, every 10 minutes
-    // if (currentHour >= 7 && currentHour < 16) {
-    //   this.logger.debug('Running the scheduled task');
-    //   const response = await fetch('https://dummyapi.online/api/movies');
-    //   const result = await response.json();
-    //   console.log('result', result);
-    // } else {
-    //   this.logger.debug('Outside the scheduled time range');
-    // }
+    const data = await this.prisma.movie.findMany();
+    if (data.length === 0) {
+      const response = await fetch('https://dummyapi.online/api/movies');
+      const result = await response.json();
+      await this.prisma.movie.createMany({ data: result });
 
-    const response = await fetch('https://dummyapi.online/api/movies');
-    const result = await response.json();
-    await this.prisma.movie.createMany({ data: result });
-
-    const job = this.schedulerRegistry.getCronJob('getMovie');
-    job.stop();
+      const job = this.schedulerRegistry.getCronJob('getMovie');
+      job.stop();
+    }
   }
 }

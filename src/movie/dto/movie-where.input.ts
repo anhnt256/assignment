@@ -8,12 +8,12 @@ import { StringNullableFilter } from '@/util/string-nullable-filter';
 
 @InputType()
 class MovieWhereInput {
-  @Type(() => StringFilter)
+  @Type(() => FloatNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => FloatNullableFilter, {
     nullable: true,
   })
-  id?: StringFilter;
+  id?: FloatNullableFilter;
 
   @Type(() => FloatNullableFilter)
   @IsOptional()
@@ -27,7 +27,7 @@ class MovieWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  name?: StringNullableFilter;
+  movie?: StringNullableFilter;
 
   @Type(() => StringNullableFilter)
   @IsOptional()

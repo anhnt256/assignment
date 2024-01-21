@@ -16,7 +16,7 @@ class MovieUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  name?: string | null;
+  movie?: string | null;
 
   @Type(() => String)
   @IsOptional()
