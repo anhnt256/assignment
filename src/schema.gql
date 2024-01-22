@@ -101,8 +101,8 @@ type Mutation {
 
 type Query {
   hello: String!
-  movie(where: MovieWhereUniqueInput): Movie!
-  movies(orderBy: [MovieOrderByInput!], skip: Float, take: Float = 10, where: MovieWhereInput): [Movie!]!
+  movie(where: MovieWhereUniqueInput!): Movie!
+  movies(orderBy: [MovieOrderByInput!], skip: Float, take: Float, where: MovieWhereInput): [Movie!]!
 }
 
 enum QueryMode {

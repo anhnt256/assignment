@@ -17,7 +17,7 @@ class MovieFindManyArgs {
   @Type(() => Number)
   skip?: number;
 
-  @Field(() => Number, { nullable: true, defaultValue: 10 })
+  @Field(() => Number, { nullable: true })
   @Type(() => Number)
   take?: number;
 }

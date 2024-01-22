@@ -2,9 +2,9 @@ import { ArgsType, Field } from '@nestjs/graphql';
 import { MovieWhereUniqueInput } from '@/movie/dto/movie-where-unique.input';
 
 @ArgsType()
-class MovieFindUniqueArgs {
-  @Field(() => MovieWhereUniqueInput, { nullable: true })
+export class MovieFindUniqueArgs {
+  @Field(() => MovieWhereUniqueInput, {
+    nullable: false
+  })
   where!: MovieWhereUniqueInput;
 }
-
-export { MovieFindUniqueArgs };

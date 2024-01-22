@@ -9,7 +9,7 @@ import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 import { LoginDto, RegisterDto } from './dto/dto';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '@/prisma.service';
+import { PrismaService } from '@/providers/prisma/prisma.service';
 @Injectable()
 export class AuthService {
   constructor(

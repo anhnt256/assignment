@@ -12,7 +12,7 @@ import { RoleModule } from './role/role.module';
 import { MovieModule } from './movie/movie.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MovieTaskService } from './cron/MovieTaskService';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './providers/prisma/prisma.service';
 import { GraphQLError } from "graphql/error";
 
 @Module({

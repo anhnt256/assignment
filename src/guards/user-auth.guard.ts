@@ -31,7 +31,7 @@ export class UserAuthGuard implements CanActivate {
         secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
       });
       request['user'] = payload;
-      return ['User', 'Admin'].includes(payload.role);
+      return payload.role === "User";
     } catch (err) {
       throw new UnauthorizedException();
     }

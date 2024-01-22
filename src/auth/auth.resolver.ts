@@ -48,7 +48,8 @@ export class AuthResolver {
   }
 
   @Query(() => String)
-  async hello() {
-    return 'hello';
+  async hello( )
+  {
+    return `hello`;
   }
 }

@@ -3,7 +3,6 @@ import { Type } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 import { DateTimeNullableFilter } from '@/util/datetime-nullable-filter';
 import { FloatNullableFilter } from '@/util/float-nullable-filter';
-import { StringFilter } from '@/util/string-filter';
 import { StringNullableFilter } from '@/util/string-nullable-filter';
 
 @InputType()

@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Movie, Prisma } from '@prisma/client';
-import { PrismaService } from "@/prisma.service";
+import { PrismaService } from "@/providers/prisma/prisma.service";
+import { MovieWhereUniqueInput } from "@/movie/dto/movie-where-unique.input";
+import { PrismaSelectService } from "@/providers/prisma/prisma-select-service";
+import { GraphQLResolveInfo } from "graphql";
 
 @Injectable()
 export class MovieService {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly prismaSelectService: PrismaSelectService
   ) {}
 
   public async create<T extends Prisma.MovieCreateArgs>(
@@ -26,9 +30,12 @@ export class MovieService {
     return this.prisma.movie.update(args);
   }
 
-  public async findOne<T extends Prisma.MovieFindUniqueArgs>(
-    args: Prisma.SelectSubset<T, Prisma.MovieFindUniqueArgs>,
-  ): Promise<Movie> {
-    return this.prisma.movie.findUnique(args);
+  public async findOne(args: MovieWhereUniqueInput, info?: GraphQLResolveInfo) {
+    const select = this.prismaSelectService.getValue(info);
+    return await this.prisma.movie.findUnique({
+      ...select,
+      where: args,
+    });
   }
+
 }

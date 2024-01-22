@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Info, Mutation, Query, Resolver, Int } from "@nestjs/graphql";
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { Movie } from '@/movie/types/movie.type';
@@ -9,6 +9,8 @@ import { MovieFindUniqueArgs } from '@/movie/dto/movie-find-unique.args';
 import { GraphQLErrorFilter } from "@/filters/custom-exception";
 import { AdminAuthGuard } from "@/guards/admin-auth.guard";
 import { UserAuthGuard } from "@/guards/user-auth.guard";
+import { MovieWhereUniqueInput } from "@/movie/dto/movie-where-unique.input";
+import { GraphQLResolveInfo } from "graphql";
 
 @Resolver()
 export class MovieResolver {
@@ -37,18 +39,23 @@ export class MovieResolver {
   }
 
   @UseFilters(GraphQLErrorFilter)
-  @UseGuards(UserAuthGuard)
+  // @UseGuards(UserAuthGuard)
   @Query(() => [Movie])
   public async movies(@Args() args: MovieFindManyArgs): Promise<Movie[]> {
     this.logger.log(`Getting a list of movies`);
+    console.log("args", args);
     return this.movieService.findMany(args);
   }
 
-  @UseFilters(GraphQLErrorFilter)
-  @UseGuards(UserAuthGuard)
+  // @UseFilters(GraphQLErrorFilter)
+  // @UseGuards(UserAuthGuard)
   @Query(() => Movie)
-  public async movie(@Args() args: MovieFindUniqueArgs): Promise<Movie> {
-    this.logger.log(`Getting one movie`);
-    return this.movieService.findOne(args);
+
+  public async movie(
+    @Args("where") args: MovieWhereUniqueInput,
+    @Info() info?: GraphQLResolveInfo
+  ): Promise<Movie>  {
+    console.log("id", args.id);
+    return await this.movieService.findOne(args, info);
   }
 }
