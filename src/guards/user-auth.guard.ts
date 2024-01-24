@@ -21,7 +21,7 @@ export class UserAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const gqlCtx = context.getArgByIndex(2);
     const request: Request = gqlCtx.req;
-    const token = this.extractTokenFromCookie(request);
+    const token = this.extractTokenFromCookie(request)
 
     if (!token) {
       throw new UnauthorizedException();
@@ -31,7 +31,7 @@ export class UserAuthGuard implements CanActivate {
         secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
       });
       request['user'] = payload;
-      return payload.role === "User";
+      return ["User", "Admin"].includes(payload.role) ;
     } catch (err) {
       throw new UnauthorizedException();
     }

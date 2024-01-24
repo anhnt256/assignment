@@ -51,11 +51,11 @@ type Movie {
 }
 
 input MovieCreateInput {
-  id: Float
+  id: Float!
   image: String
   imdb_url: String
   movie: String
-  rating: Float
+  rating: Float!
 }
 
 input MovieOrderByInput {
@@ -92,6 +92,7 @@ type Mutation {
   createRole(roleInput: RoleDto!): RoleResponse!
   createRoleDetail(roleDetailInput: RoleDetailDto!): RoleDetailResponse!
   createUserRoleMap(userRoleMapInput: UserRoleMapDto!): UserRoleMapResponse!
+  deleteMovie(where: MovieWhereUniqueInput!): Movie!
   login(loginInput: LoginDto!): LoginResponse!
   logout: String!
   refreshToken: String!
@@ -102,7 +103,7 @@ type Mutation {
 type Query {
   hello: String!
   movie(where: MovieWhereUniqueInput!): Movie!
-  movies(orderBy: [MovieOrderByInput!], skip: Float, take: Float, where: MovieWhereInput): [Movie!]!
+  movies(orderBy: MovieOrderByInput!, skip: Float!, take: Float!, where: MovieWhereInput!): [Movie!]!
 }
 
 enum QueryMode {

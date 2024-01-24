@@ -1,6 +1,6 @@
 spectaql:
-  logoFile: ./test/fixtures/logo.png
-  faviconFile: ./test/fixtures/favicon.png
+  logoFile: ./src/document/img/logo.svg
+  faviconFile: ./src/document/img/cloudverse.jpg
   displayAllServers: true
 
 introspection:
@@ -38,6 +38,9 @@ servers:
     description: Production
     production: true
     headers:
-      - name: Authorization
-        example: Bearer <YOUR_TOKEN_HERE>
-        comment: Your foo from bar
+      - name: Cookie
+        example: access_token={JTW_TOKEN_HERE}; Path=/; HttpOnly
+        comment: set access_token cookie using for authentication
+      - name: Cookie
+        example: refresh_token={REFRESH_TOKEN_HERE; Path=/; HttpOnly
+        comment: set refresh_token cookie using for refresh access_token

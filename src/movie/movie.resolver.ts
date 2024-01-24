@@ -1,15 +1,15 @@
-import { Args, Info, Mutation, Query, Resolver, Int } from "@nestjs/graphql";
+import { Args, Info, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { Movie } from '@/movie/types/movie.type';
-import { MovieCreateArgs } from '@/movie/dto/movie-create.args';
-import { MovieUpdateArgs } from '@/movie/dto/movie-update.args';
-import { MovieFindManyArgs } from '@/movie/dto/movie-find-many.args';
-import { MovieFindUniqueArgs } from '@/movie/dto/movie-find-unique.args';
 import { GraphQLErrorFilter } from "@/filters/custom-exception";
 import { AdminAuthGuard } from "@/guards/admin-auth.guard";
 import { UserAuthGuard } from "@/guards/user-auth.guard";
 import { MovieWhereUniqueInput } from "@/movie/dto/movie-where-unique.input";
+import { MovieOrderByInput } from "@/movie/dto/movie-order-by.input";
+import { MovieWhereInput } from "@/movie/dto/movie-where.input";
+import { MovieUpdateInput } from "@/movie/dto/movie-update.input";
+import { MovieCreateInput } from "@/movie/dto/movie-create-input";
 import { GraphQLResolveInfo } from "graphql";
 
 @Resolver()
@@ -19,43 +19,61 @@ export class MovieResolver {
 
   @UseFilters(GraphQLErrorFilter)
   @UseGuards(AdminAuthGuard)
+  // User with role admin can access this query
   @Mutation(() => Movie)
-  public async createMovie(@Args() args: MovieCreateArgs): Promise<Movie> {
-    this.logger.log(`Creating a movie`);
-    return await this.movieService.create(args);
+  public async createMovie(@Args('data') data: MovieCreateInput): Promise<Movie> {
+    this.logger.log(`Creating a movie`, data);
+    return await this.movieService.create({data});
   }
 
   @UseFilters(GraphQLErrorFilter)
   @UseGuards(AdminAuthGuard)
+  // User with role admin can access this query
   @Mutation(() => Movie)
-  public async updateMovie(@Args() args: MovieUpdateArgs): Promise<Movie> {
+  public async deleteMovie(    @Args('where') where: MovieWhereUniqueInput,): Promise<Movie> {
+    this.logger.log(`Deleting a movie`, where);
+    return await this.movieService.delete({where});
+  }
+
+  @UseFilters(GraphQLErrorFilter)
+  @UseGuards(AdminAuthGuard)
+  // User with role admin can access this query
+  @Mutation(() => Movie)
+  public async updateMovie(@Args('data') data: MovieUpdateInput, @Args('where') where: MovieWhereUniqueInput,): Promise<Movie> {
     this.logger.log(`Updating a movie`);
     return await this.movieService.update({
-      ...args,
+      where,
       data: {
+        ...data,
         updatedAt: new Date(),
       },
     });
   }
 
   @UseFilters(GraphQLErrorFilter)
-  // @UseGuards(UserAuthGuard)
+  @UseGuards(UserAuthGuard)
+
+  // User with role user and admin can access this query
+
   @Query(() => [Movie])
-  public async movies(@Args() args: MovieFindManyArgs): Promise<Movie[]> {
+  public async movies(@Args('where') where: MovieWhereInput,
+                      @Args('orderBy') orderBy: MovieOrderByInput,
+                      @Args('skip') skip: number,
+                      @Args('take') take: number): Promise<Movie[]> {
     this.logger.log(`Getting a list of movies`);
-    console.log("args", args);
-    return this.movieService.findMany(args);
+    return this.movieService.movies({where, orderBy, skip, take});
   }
 
-  // @UseFilters(GraphQLErrorFilter)
-  // @UseGuards(UserAuthGuard)
-  @Query(() => Movie)
+  @UseFilters(GraphQLErrorFilter)
+  @UseGuards(UserAuthGuard)
+  // User with role user and admin can access this query
+  @Query(() => Movie, { nullable: false })
 
   public async movie(
-    @Args("where") args: MovieWhereUniqueInput,
+    @Args('where') where: MovieWhereUniqueInput,
     @Info() info?: GraphQLResolveInfo
   ): Promise<Movie>  {
-    console.log("id", args.id);
-    return await this.movieService.findOne(args, info);
+    this.logger.log(`Getting a movie`);
+    return await this.movieService.movie(where, info);
   }
 }

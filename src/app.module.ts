@@ -56,21 +56,21 @@ import { GraphQLError } from "graphql/error";
           context: ({ req, res }) => {
             return { req, res };
           },
-          // formatError: (error) => {
-          //   const originalError = error.extensions
-          //     ?.originalError as GraphQLError;
-          //
-          //   if (!originalError) {
-          //     return {
-          //       message: error.message,
-          //       code: error.extensions?.code,
-          //     };
-          //   }
-          //   return {
-          //     message: originalError.message,
-          //     code: error.extensions?.code,
-          //   };
-          // },
+          formatError: (error) => {
+            const originalError = error.extensions
+              ?.originalError as GraphQLError;
+
+            if (!originalError) {
+              return {
+                message: error.message,
+                code: error.extensions?.code,
+              };
+            }
+            return {
+              message: originalError.message,
+              code: error.extensions?.code,
+            };
+          },
         };
       },
     }),

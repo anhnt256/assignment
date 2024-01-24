@@ -1,20 +1,17 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 @InputType()
 class MovieCreateInput {
   @Type(() => Number)
-  @Field(() => Number, {
-    nullable: true,
-  })
+  @Field(() => Number)
+  @IsNotEmpty()
   id: number;
 
   @Type(() => Number)
   @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
+  @Field(() => Number)
   rating: number | null;
 
   @Type(() => String)
