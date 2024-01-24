@@ -212,6 +212,18 @@ You need to run the code below to generate the documentation:
 
 You can check out the documentation of project at http://localhost:4400
 
+  <div align="center">
+    <img src="./src/document/img/document-1.png" alt="document"/>
+  </div>
+
+  <div align="center">
+    <img src="./src/document/img/queries.png" alt="queries"/>
+  </div>
+
+  <div align="center">
+    <img src="./src/document/img/mutations.png" alt="mutations"/>
+  </div>
+
 ---
 ## Docker
 To start working with **Docker**, you need have [Docker](https://docs.docker.com/engine/install/) installed locally and also the package manage as **npm** ro **yarn**
